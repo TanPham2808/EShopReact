@@ -31,4 +31,19 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+// Seeding data
+var scope = app.Services.CreateScope();
+var context = scope.ServiceProvider.GetRequiredService<StoreContext>();
+var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+try
+{
+    context.Database.Migrate();
+    DBInitializer.Initialize(context);
+}
+catch (Exception ex)
+{
+    logger.LogError($"A problem seeding data {ex}");
+    throw;
+}
+
 app.Run();
