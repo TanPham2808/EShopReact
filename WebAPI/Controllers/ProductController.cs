@@ -16,7 +16,7 @@ namespace WebAPI.Controllers
             _storeContext = storeContext;
         }
 
-        [HttpGet("GetPro")]
+        [HttpGet]
         public async Task<IActionResult> GetProduct()
         {
             var response = await _storeContext.Products.ToListAsync();

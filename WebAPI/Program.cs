@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System;
 using WebAPI.Data;
 
@@ -15,6 +15,7 @@ builder.Services.AddDbContext<StoreContext>(options =>
 {
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+builder.Services.AddCors();
 
 var app = builder.Build();
 
@@ -24,6 +25,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+// Cho phép frontend localhost 3000 gọi đến BE
+app.UseCors(option =>
+{
+    option.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000");
+});
 
 app.UseHttpsRedirection();
 
