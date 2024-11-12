@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Product } from "../model/product";
 import Catalog from "../../features/catalog/Catalog";
+import Typography from "@mui/material/Typography";
 
 function App() {
   const [products, setProduct] = useState<Product[]>([]);
@@ -20,14 +21,17 @@ function App() {
         price: preState.length * 100 + 100,
         brand: "some brean",
         description: "some desctiption",
-        pictureUrl: "http://picsum.photo/200",
+        pictureUrl: "https://picsum.photos/200",
       },
     ]);
   };
 
   return (
     <div>
-      <h1>Re-Store</h1>
+      <h1></h1>
+      <Typography variant="h1" gutterBottom>
+        Re-Store
+      </Typography>
       <Catalog products={products} addProduct={addProduct} />
     </div>
   );

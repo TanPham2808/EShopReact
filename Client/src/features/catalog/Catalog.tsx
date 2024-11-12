@@ -1,4 +1,6 @@
+import { Button } from "@mui/material";
 import { Product } from "../../app/model/product";
+import ProductList from "./ProductList";
 
 // Khai báo interface cho props
 interface Props {
@@ -9,16 +11,10 @@ interface Props {
 const Catalog = ({ products, addProduct }: Props) => {
   return (
     <>
-      <ul>
-        {products.map((product) => {
-          return (
-            <li key={product.id}>
-              {product.name} - ${product.price}
-            </li>
-          );
-        })}
-      </ul>
-      <button onClick={addProduct}>Click add</button>
+      <ProductList products={products} />
+      <Button variant="contained" onClick={addProduct}>
+        Add Product
+      </Button>
     </>
   );
 };
