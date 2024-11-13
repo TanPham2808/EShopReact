@@ -6,9 +6,7 @@ using WebAPI.Entites;
 
 namespace WebAPI.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class ProductController : ControllerBase
+    public class ProductController : BaseAPIController
     {
         private readonly StoreContext _storeContext;
         public ProductController(StoreContext storeContext)
