@@ -26,8 +26,14 @@ namespace WebAPI.Controllers
         public async Task<IActionResult> GetProductById(int id)
         {
             Product product = await _storeContext.Products.FirstOrDefaultAsync(x => x.Id == id);
+            if (product == null) return NotFound();
             return Ok(product);
         }
 
+        [HttpGet("TestError")]
+        public Task<IActionResult> TestErr()
+        {
+            throw new Exception("Test Error");
+        }
     }
 }

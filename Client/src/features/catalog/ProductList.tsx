@@ -1,10 +1,3 @@
-import {
-  Avatar,
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
-} from "@mui/material";
 import Grid from "@mui/material/Grid";
 import { Product } from "../../app/model/product";
 import ProductCard from "./ProductCard";
