@@ -1,4 +1,5 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
+import { toast } from "react-toastify";
 
 // Base URL
 axios.defaults.baseURL = "http://localhost:5000/api/";
@@ -10,6 +11,20 @@ axios.interceptors.response.use(
     return response;
   },
   (error: AxiosError) => {
+    const { status, statusText } = error.response as AxiosResponse;
+    switch (status) {
+      case 404:
+        toast.error(statusText);
+        break;
+      case 401:
+        toast.error(statusText);
+        break;
+      case 500:
+        toast.error(statusText);
+        break;
+      default:
+        break;
+    }
     return Promise.reject(error.response);
   }
 );
@@ -26,6 +41,10 @@ const Catalog = {
   detail: (id: number) => requests.get(`product/${id}`),
 };
 
-const agent = { Catalog };
+const TestError = {
+  testErrorServer: () => requests.get("TestError"),
+};
+
+const agent = { Catalog, TestError };
 
 export default agent;
