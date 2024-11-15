@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Product } from "../../app/model/product";
 import agent from "../../app/api/agent";
+import NotFound from "../../app/errors/NotFound";
 
 export default function ProductDetail() {
   let { id } = useParams<{ id: string }>();
@@ -27,7 +28,7 @@ export default function ProductDetail() {
   }, [id]);
 
   if (loading) return <h3>Loading....</h3>;
-  if (!product) return <h3>Product not found</h3>;
+  if (!product) return <NotFound />;
 
   // return <Typography variant="h2">{product.name} </Typography>;
   return (
