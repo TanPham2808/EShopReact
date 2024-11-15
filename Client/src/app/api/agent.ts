@@ -1,5 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { toast } from "react-toastify";
+import { router } from "../router/Routes";
 
 // Base URL
 axios.defaults.baseURL = "http://localhost:5000/api/";
@@ -11,8 +12,20 @@ axios.interceptors.response.use(
     return response;
   },
   (error: AxiosError) => {
-    const { status, statusText } = error.response as AxiosResponse;
+    const { data, status, statusText } = error.response as AxiosResponse;
     switch (status) {
+      case 400:
+        if (data.errors) {
+          const modelStateError: string[] = []; // Khởi tạo mảng
+          for (const key in data.errors) {
+            if (data.errors[key]) {
+              modelStateError.push(data.errors[key]);
+            }
+          }
+          throw modelStateError.flat(); // Quăng throw ra trên Console
+        }
+        toast.error(statusText);
+        break;
       case 404:
         toast.error(statusText);
         break;
@@ -20,7 +33,7 @@ axios.interceptors.response.use(
         toast.error(statusText);
         break;
       case 500:
-        toast.error(statusText);
+        router.navigate("/server-error", { state: { error: data } });
         break;
       default:
         break;
@@ -42,7 +55,9 @@ const Catalog = {
 };
 
 const TestError = {
-  testErrorServer: () => requests.get("TestError"),
+  TestNotFound: () => requests.get("/Buggy/not-found"),
+  TestValidation: () => requests.get("/Buggy/validation-error"),
+  TestServerError: () => requests.get("/Buggy/server-error"),
 };
 
 const agent = { Catalog, TestError };
